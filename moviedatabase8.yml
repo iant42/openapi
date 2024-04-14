@@ -1,0 +1,185 @@
+openapi: 3.0.1
+info:
+  title: "TheMovieDatabaseAPI"
+  description: "Testing my openAPI spec"
+  version: 1.0.0
+  termsOfService: "https://www.themoviedb.org/api-terms-of-use"
+  contact:
+    name: "TheMovieDatabase API"
+    url: "https://developer.themoviedb.org/docs/getting-started"
+
+
+servers:
+  - url: "https://api.themoviedb.org/3/movie"
+paths:
+  
+
+  /{movie_id}:
+    get:
+      tags: 
+        - movieID
+      summary: "Use this to get specific information on movies whose ID you have"
+      description: "get the specific details of movies blah blah blah"
+      operationId: specificDetails
+      parameters: 
+        - name: movie_id
+          in: path
+          description: Get the rating, watchlist and favourite status of an account
+          required: true
+          schema:
+            type: integer
+      responses:
+        200: 
+          description: successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200"
+        404:
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Movie not found
+                type: string
+                example: Not found
+      security:
+        - api_key: []
+
+  
+components:
+  schemas:
+    200:
+      title: successful response
+      type: object
+      properties:
+        adult:
+          type: boolean
+          description: Is this suitable for adults only
+          example: true
+        backdrop_path:
+          type: string
+          description: The path to the backdrop image for this movie
+        belongs_to_collection:
+          type: string
+        budget:
+          type: integer
+          description: The budget for this movie
+        genres: 
+         $ref: "#/components/schemas/genres"
+        homepage:
+          type: string
+          description: The link to this movie's homepage
+        id:
+          type: integer
+          description: This movie's ID in our system
+        imdb_id:
+          type: string
+          description: The IMDb ID of this movie
+        original_language:
+          type: string
+          description: The original language of this movie
+        original_title:
+          type: string
+          description: The original title of this movie
+        overview:
+          type: string
+          description: A short overview of this movie
+        popularity:
+          type: integer
+          description: A ranking of how popular this movie is
+        poster_path:
+          type: string
+          description: The path to this movie's poster image
+        production_companies:
+          type: array
+          items:
+            oneOf:
+              - type: integer
+              - type: string
+              - type: string
+              - type: string
+        release_date:
+          type: string
+          description: The date this movie was released on
+        revenue:
+          type: integer
+          description: The amount of money this movie generated
+        runtime:
+          type: integer
+          description: How long this movie is
+        spoken_languages:
+         $ref: "#/components/schemas/spoken_languages"
+        status:
+          type: string
+          description: Whether this movie has been released or not
+        tagline:
+          type: string
+          description: The tagline of this movie
+        title:
+          type: string
+          description: This movie's title
+        video:
+          type: boolean
+          description: Whether this movie has a video associated with it
+        vote_average:
+          type: number
+          description: The average value of this movie's votes
+        vote_count:
+          type: integer
+          description: The amount of votes on this movie
+
+    genres:
+      title: genres
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID number of the genre
+          example: 47
+        name:
+          type: string
+          description: The name of the genre
+          example: comedy
+
+    spoken_languages:
+      title: spoken languages
+      type: object
+      properties:
+        english_name:
+          type: string
+          description: English name of the language
+          example: Spanish
+        iso_639_1:
+          type: string
+          description: ISO abbreviation of the language
+          example: es
+        name:
+          type: string
+          description: Language's name in its own language
+          example: Español
+  securitySchemes:
+    api_key:
+      type: apiKey
+      description: API key to authorize requests.
+      name: api_key
+      in: query
+
+security:
+        - api_key: []
+
+
+
+tags:
+  - name: Movie Details
+    description: Information for the movieID endpoint
+
+
+externalDocs: 
+  description: The documentation for this API
+  url: https://developer.themoviedb.org/docs/getting-started
+
+
+
+
+
